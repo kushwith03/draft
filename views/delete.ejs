@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog in detail</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <h1>Here is blog in detail</h1>
+    <p><strong>Blog id : <%=blog.id %></strong></p>
+    <div class="blog">
+      <p id="blog-title">Blog title : <%=blog.title %></p>
+      <hr />
+      <p id="blog-content">
+        <strong> Blog content:</strong> <%=blog.content %>
+      </p>
+      <hr />
+      <p id="blog-author"><strong>Blog author:</strong> <%=blog.author %></p>
+      <p><%=blog.date%></p>
+      <hr />
+      <form action="/blogs/<%= blog.id %>?_method=DELETE" method="POST">
+          
+          <input
+          placeholder="Enter Password to Delete"
+            type="password"
+            name="password"
+            id="password"
+            required
+          />
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+      <hr>
+       <form action="/blogs">
+        <button class="btn btn-success">Back</button>
+      </form>
+  </body>
+</html>

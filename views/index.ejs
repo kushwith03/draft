@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Blogs</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <h1 id="main-heading">All blogs</h1>
+    <hr />
+    <a id="create-btn" href="/blogs/new "
+      ><button class="btn btn-success">Create blog</button></a
+    >
+
+    <div class="container-blogs">
+      <%for(let blog of blogs){%>
+      <div class="blog">
+        <p id="blog-title"><%=blog.title %></p>
+        <hr />
+        <p id="blog-content"><%=blog.content %></p>
+        <hr />
+        <p id="blog-author">~<%=blog.author %></p>
+        <hr />
+        <div>
+          <a href="/blogs/<%=blog.id%>"
+            ><button class="btn btn-info">See blog</button></a
+          >
+          <a href="/blogs/<%=blog.id%>/edit"
+            ><button class="btn btn-secondary">Edit blog</button></a
+          >
+          <a href="/blogs/<%=blog.id%>/delete"
+            ><button class="btn btn-danger">Delete</button></a
+          >
+        </div>
+      </div>
+      <%}%>
+    </div>
+    <p class="line">Made with ❤️ by kushwith_03</p>
+  </body>
+  <%- include("footer.ejs")%>
+</html>
