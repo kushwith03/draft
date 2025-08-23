@@ -4,6 +4,8 @@ import mysql from "mysql2";
 import { fileURLToPath } from "url";
 import { v4 as uuidv4 } from "uuid";
 import methodOverride from "method-override";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
