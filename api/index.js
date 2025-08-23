@@ -21,17 +21,18 @@ app.set("views", path.join(__dirname, "..", "views"));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: 3306,
+  host: process.env.MYSQLHOST,       
+  user: process.env.MYSQLUSER,        
+  password: process.env.MYSQLPASSWORD, 
+  database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT || 3306, 
 });
 
-console.log('DB_HOST:', process.env.DB_HOST);
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_PASS:', process.env.DB_PASS ? '*****' : 'undefined');
-console.log('DB_NAME:', process.env.DB_NAME);
+console.log('MYSQLHOST:', process.env.MYSQLHOST);
+console.log('MYSQLUSER:', process.env.MYSQLUSER);
+console.log('MYSQLPASSWORD:', process.env.MYSQLPASSWORD ? '*****' : 'undefined');
+console.log('MYSQLDATABASE:', process.env.MYSQLDATABASE);
+console.log('MYSQLPORT:', process.env.MYSQLPORT);
 
 app.get("/blogs", (req, res) => {
   let q = "SELECT * FROM blogs ORDER BY date DESC";
