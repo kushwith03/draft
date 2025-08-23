@@ -19,11 +19,11 @@ app.set("views", path.join(__dirname, "..", "views"));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST,  
+  host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  port: 3306                 
+  port: 3306,
 });
 
 
