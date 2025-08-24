@@ -4,9 +4,9 @@ import mysql from "mysql2";
 import { fileURLToPath } from "url";
 import { v4 as uuidv4 } from "uuid";
 import methodOverride from "method-override";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
 
@@ -23,19 +23,30 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "..", "views"));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
-const connection = mysql.createConnection({
-  host: process.env.MYSQLHOST,       
-  user: process.env.MYSQLUSER,        
-  password: process.env.MYSQLPASSWORD, 
-  database: process.env.MYSQLDATABASE,
-  port: process.env.MYSQLPORT || 3306, 
-});
+let connection;
 
-console.log('MYSQLHOST:', process.env.MYSQLHOST);
-console.log('MYSQLUSER:', process.env.MYSQLUSER);
-console.log('MYSQLPASSWORD:', process.env.MYSQLPASSWORD ? '*****' : 'undefined');
-console.log('MYSQLDATABASE:', process.env.MYSQLDATABASE);
-console.log('MYSQLPORT:', process.env.MYSQLPORT);
+// Check if we have the new single URL variable (on Railway) or the old separate variables (for backwards compatibility)
+if (process.env.DATABASE_URL) {
+  // Create connection from the single URL string
+  connection = mysql.createConnection(process.env.DATABASE_URL);
+  console.log("Using DATABASE_URL for connection");
+} else {
+  // Fall back to the old separate variables (for local development if needed)
+  connection = mysql.createConnection({
+    host: process.env.MYSQLHOST,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQLPASSWORD,
+    database: process.env.MYSQLDATABASE,
+    port: process.env.MYSQLPORT || 3306,
+  });
+  console.log("Using separate variables for connection");
+}
+
+// Debug logs
+console.log("DATABASE_URL available:", !!process.env.DATABASE_URL);
+console.log("MYSQLHOST:", process.env.MYSQLHOST);
+console.log("MYSQLUSER:", process.env.MYSQLUSER);
+console.log("MYSQLDATABASE:", process.env.MYSQLDATABASE);
 
 app.get("/blogs", (req, res) => {
   let q = "SELECT * FROM blogs ORDER BY date DESC";
