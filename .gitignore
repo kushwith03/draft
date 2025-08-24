@@ -3,6 +3,7 @@ node_modules/
 
 # Ignore environment variables file (contains secrets)
 .env
+.DS_Store
 
 # Logs
 logs
