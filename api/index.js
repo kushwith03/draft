@@ -4,11 +4,6 @@ import mysql from "mysql2";
 import { fileURLToPath } from "url";
 import { v4 as uuidv4 } from "uuid";
 import methodOverride from "method-override";
-import dotenv from "dotenv";
-
-if (process.env.NODE_ENV !== "production") {
-  dotenv.config();
-}
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,30 +18,21 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "..", "views"));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
-let connection;
+// let connection = mysql.createConnection({
+//   host: process.env.MYSQLHOST,
+//   user: process.env.MYSQLUSER,
+//   password: process.env.MYSQLPASSWORD,
+//   database: process.env.MYSQLDATABASE,
+//   port: process.env.MYSQLPORT || 3306,
+// });
 
-// Check if we have the new single URL variable (on Railway) or the old separate variables (for backwards compatibility)
-if (process.env.DATABASE_URL) {
-  // Create connection from the single URL string
-  connection = mysql.createConnection(process.env.DATABASE_URL);
-  console.log("Using DATABASE_URL for connection");
-} else {
-  // Fall back to the old separate variables (for local development if needed)
-  connection = mysql.createConnection({
-    host: process.env.MYSQLHOST,
-    user: process.env.MYSQLUSER,
-    password: process.env.MYSQLPASSWORD,
-    database: process.env.MYSQLDATABASE,
-    port: process.env.MYSQLPORT || 3306,
-  });
-  console.log("Using separate variables for connection");
-}
-
-// Debug logs
-console.log("DATABASE_URL available:", !!process.env.DATABASE_URL);
-console.log("MYSQLHOST:", process.env.MYSQLHOST);
-console.log("MYSQLUSER:", process.env.MYSQLUSER);
-console.log("MYSQLDATABASE:", process.env.MYSQLDATABASE);
+let connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "kush@0510",
+  database: "blogapp",
+  port: 3306,
+});
 
 app.get("/blogs", (req, res) => {
   let q = "SELECT * FROM blogs ORDER BY date DESC";
